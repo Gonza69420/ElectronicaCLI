@@ -29,6 +29,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
+
+    //HTTP Client
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
