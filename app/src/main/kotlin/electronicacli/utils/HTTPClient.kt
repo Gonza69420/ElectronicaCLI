@@ -46,6 +46,7 @@ fun post (url : String , json : String, token : String) : String {
 fun get (url : String ) : String {
     val request : Request = Request.Builder()
         .url(getServerUrl() + url)
+        .get()
         .build()
 
     return try {
@@ -59,6 +60,22 @@ fun get (url : String ) : String {
 fun get (url : String , token : String) : String {
     val request : Request = Request.Builder()
             .url(getServerUrl() + url)
+            .get()
+            .addHeader("authorization", token)
+            .build()
+
+    return try {
+        val response: Response = client.newCall(request).execute()
+        response.body!!.string()
+    } catch (e: IOException) {
+        throw Exception(e.message)
+    }
+}
+
+fun delete (url : String , token : String) : String {
+    val request : Request = Request.Builder()
+            .url(getServerUrl() + url)
+            .delete()
             .addHeader("authorization", token)
             .build()
 
