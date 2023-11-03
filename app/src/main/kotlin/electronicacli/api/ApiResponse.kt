@@ -22,7 +22,7 @@ class ApiResponse {
 
     fun addMachine () : String {
         try{
-            val response = post("/machine", "{}", token)
+            val response = post("/addMachine", "{}", token)
             return "Machine added"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -31,7 +31,7 @@ class ApiResponse {
 
     fun deleteMachine(id : String) : String {
         try{
-            val response = delete("/machine/$id", token)
+            val response = delete("/deleteMachine/$id", token)
             return "Machine deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -40,7 +40,7 @@ class ApiResponse {
 
     fun getIncomeInMachine (id : String) : String {
         try {
-            return get("/machine/$id/income", token)
+            return get("/getIncome/${id}", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -76,7 +76,7 @@ class ApiResponse {
 
     fun getMachineById (id : String) : String {
         try{
-            return get("/machine/$id", token)
+            return get("/getMachine/$id", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -84,7 +84,7 @@ class ApiResponse {
 
     fun getTotalIncome () : String {
         try{
-            return get("/totalIncome", token)
+            return get("/getTotalIncome", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -94,7 +94,7 @@ class ApiResponse {
         val json = "{\"newPrice\":\"$newPrice\"}"
 
         try{
-            val response = put("/machine/$id/adjustPrice", json, token)
+            val response = put("/adjustPrice/${id}", json, token)
             return "Price adjusted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -105,7 +105,7 @@ class ApiResponse {
         val json = "{\"name\":\"$name\",\"price\":\"$price\"}"
 
         try{
-            val response = post("/product", json, token)
+            val response = post("/addProduct", json, token)
             return "Product added"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -114,7 +114,7 @@ class ApiResponse {
 
     fun deleteProduct(id : String) : String {
         try{
-            val response = delete("/product/$id", token)
+            val response = delete("/deleteProduct/$id", token)
             return "Product deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
