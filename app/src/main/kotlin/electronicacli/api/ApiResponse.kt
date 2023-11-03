@@ -2,6 +2,7 @@ package electronicacli.api
 import electronicacli.utils.post
 import electronicacli.utils.get
 import electronicacli.utils.delete
+import electronicacli.utils.put
 
 
 class ApiResponse {
@@ -57,8 +58,8 @@ class ApiResponse {
         val json = "{\"username\":\"$username\",\"password\":\"$password\",\"name\":\"$name\"}"
 
         try{
-            val response = post("/mantainenceStaff", json, token)
-            return "Mantainence staff added"
+            val response = post("/addMaintenanceStaff", json, token)
+            return "Maintenance staff added"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -66,8 +67,8 @@ class ApiResponse {
 
     fun deleteMaintenanceStaff (id : String) : String {
         try{
-            val response = delete("/mantainenceStaff/$id", token)
-            return "Mantainence staff deleted"
+            val response = delete("/deleteMaintenanceStaff/$id", token)
+            return "Maintenance staff deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -93,7 +94,7 @@ class ApiResponse {
         val json = "{\"newPrice\":\"$newPrice\"}"
 
         try{
-            val response = post("/machine/$id/adjustPrice", json, token)
+            val response = put("/machine/$id/adjustPrice", json, token)
             return "Price adjusted"
         } catch (e: Exception) {
             throw Exception(e.message)

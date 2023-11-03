@@ -86,3 +86,20 @@ fun delete (url : String , token : String) : String {
         throw Exception(e.message)
     }
 }
+
+fun put (url: String ,json: String, token : String ) : String {
+    val body : RequestBody = json.toRequestBody(JSON)
+
+    val request : Request = Request.Builder()
+            .url(getServerUrl() + url)
+            .put(body)
+            .addHeader("authorization", token)
+            .build()
+
+    return try {
+        val response: Response = client.newCall(request).execute()
+        response.body!!.string()
+    } catch (e: IOException) {
+        throw Exception(e.message)
+    }
+}
