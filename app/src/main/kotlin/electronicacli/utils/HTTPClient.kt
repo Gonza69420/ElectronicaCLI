@@ -1,27 +1,71 @@
 package electronicacli.utils
 
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import java.util.Optional
+import com.typesafe.config.ConfigFactory
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
+import electronicacli.utils.getServerUrl
 
-fun request (url : String) : Optional<Response> {
-    val client = OkHttpClient()
 
-    val request = Request.Builder()
-        .url(url)
+val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
+
+var client = OkHttpClient()
+
+fun post (url : String , json : String) : String {
+    val body : RequestBody = json.toRequestBody(JSON)
+    val request : Request = Request.Builder()
+        .url(getServerUrl() + url)
+        .post(body)
         .build()
 
-    try{
+    return try {
         val response: Response = client.newCall(request).execute()
-        if (response.isSuccessful) {
-            return Optional.of(response)
-        } else {
-            println("Request failed with code: ${response.code}")
-        }
-    } catch (e: Exception) {
-        println("Request failed: ${e.message}")
+        response.body!!.string()
+    } catch (e: IOException) {
+        throw Exception(e.message)
     }
+}
 
-    return Optional.empty()
+fun post (url : String , json : String, token : String) : String {
+    val body : RequestBody = json.toRequestBody(JSON)
+    val request : Request = Request.Builder()
+            .url(getServerUrl() + url)
+            .post(body)
+            .addHeader("authorization", token)
+            .build()
+
+    return try {
+        val response: Response = client.newCall(request).execute()
+        response.body!!.string()
+    } catch (e: IOException) {
+        throw Exception(e.message)
+    }
+}
+
+fun get (url : String ) : String {
+    val request : Request = Request.Builder()
+        .url(getServerUrl() + url)
+        .build()
+
+    return try {
+        val response: Response = client.newCall(request).execute()
+        response.body!!.string()
+    } catch (e: IOException) {
+        throw Exception(e.message)
+    }
+}
+
+fun get (url : String , token : String) : String {
+    val request : Request = Request.Builder()
+            .url(getServerUrl() + url)
+            .addHeader("authorization", token)
+            .build()
+
+    return try {
+        val response: Response = client.newCall(request).execute()
+        response.body!!.string()
+    } catch (e: IOException) {
+        throw Exception(e.message)
+    }
 }
