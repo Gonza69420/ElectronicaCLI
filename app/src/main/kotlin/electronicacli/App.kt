@@ -1,12 +1,6 @@
 package electronicacli
-
-class App {
-    val greeting: String
-        get() {
-            return "Hello World!"
-        }
-}
+import electronicacli.CLI.scipt
 
 fun main() {
-    println(App().greeting)
+    scipt()
 }
