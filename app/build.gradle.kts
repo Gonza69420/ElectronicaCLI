@@ -32,6 +32,10 @@ dependencies {
 
     //HTTP Client
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
+    //TypeSafe
+    implementation("com.typesafe:config:1.4.1")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
