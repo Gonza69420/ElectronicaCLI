@@ -29,7 +29,7 @@ class ApiResponse {
         }
     }
 
-    fun deleteMachine(id : String) : String {
+    fun deleteMachine(id : Int) : String {
         try{
             val response = delete("/deleteMachine/$id", token)
             return "Machine deleted"
@@ -38,7 +38,7 @@ class ApiResponse {
         }
     }
 
-    fun getIncomeInMachine (id : String) : String {
+    fun getIncomeInMachine (id : Int) : String {
         try {
             return get("/getIncome/${id}", token)
         } catch (e: Exception) {
@@ -65,7 +65,7 @@ class ApiResponse {
         }
     }
 
-    fun deleteMaintenanceStaff (id : String) : String {
+    fun deleteMaintenanceStaff (id : Int) : String {
         try{
             val response = delete("/deleteMaintenanceStaff/$id", token)
             return "Maintenance staff deleted"
@@ -74,7 +74,7 @@ class ApiResponse {
         }
     }
 
-    fun getMachineById (id : String) : String {
+    fun getMachineById (id : Int) : String {
         try{
             return get("/getMachine/$id", token)
         } catch (e: Exception) {
@@ -90,7 +90,7 @@ class ApiResponse {
         }
     }
 
-    fun adjustPrice(id : String , newPrice : String ) : String {
+    fun adjustPrice(id : Int , newPrice : Int ) : String {
         val json = "{\"newPrice\":\"$newPrice\"}"
 
         try{
@@ -101,7 +101,7 @@ class ApiResponse {
         }
     }
 
-    fun addProduct(name : String , price : String) : String {
+    fun addProduct(name : String , price : Int) : String {
         val json = "{\"name\":\"$name\",\"price\":\"$price\"}"
 
         try{
@@ -112,7 +112,7 @@ class ApiResponse {
         }
     }
 
-    fun deleteProduct(id : String) : String {
+    fun deleteProduct(id : Int) : String {
         try{
             val response = delete("/deleteProduct/$id", token)
             return "Product deleted"

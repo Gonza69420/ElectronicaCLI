@@ -17,6 +17,13 @@ fun scipt() {
         print("Password:")
         val password = readLine()
 
+        if (username != null && password != null) {
+            if (username.length > 3 || password.length > 3) {
+                println("Invalid username or password")
+                continue
+            }
+        }
+
         val login = api.login(username!!, password!!)
 
         if (login == "Login successful") {
@@ -44,25 +51,57 @@ fun scipt() {
         println("12. Exit")
 
         print("Option:")
-        val option = readLine()
+        val option = readlnOrNull()
 
         when (option) {
             "1" -> {
+                if (!areYouSure()) {
+                    continue
+                }
+
                 val addMachine = api.addMachine()
                 println(addMachine)
             }
             "2" -> {
                 print("Machine id:")
-                val id = readLine()
+                val id = readlnOrNull()
 
-                val deleteMachine = api.deleteMachine(id!!)
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                val idInt = id!!.toInt()
+
+                val deleteMachine = api.deleteMachine(idInt)
                 println(deleteMachine)
+
             }
             "3" -> {
                 print("Machine id:")
-                val id = readLine()
+                val id = readlnOrNull()
 
-                val income = api.getIncomeInMachine(id!!)
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                val idInt = id!!.toInt()
+
+
+                val income = api.getIncomeInMachine(idInt)
                 println(income)
             }
             "4" -> {
@@ -71,22 +110,58 @@ fun scipt() {
             }
             "5" -> {
                 print("Username:")
-                val username = readLine()
+                val username = readlnOrNull()
 
                 print("Password:")
-                val password = readLine()
+                val password = readlnOrNull()
 
                 print("Name:")
-                val name = readLine()
+                val name = readlnOrNull()
+
+                if (username != null && password != null && name != null) {
+                    if (username.length > 3 || password.length > 3 || name.length > 3) {
+                        println("Invalid username or password")
+                        continue
+                    }
+                }
 
                 val addMaintenanceStaff = api.addMaintenanceStaff(username!!, password!!, name!!)
                 println(addMaintenanceStaff)
             }
+            "6" -> {
+                print("Maintenance staff id:")
+                val id = readlnOrNull()
+
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                val idInt = id!!.toInt()
+
+                val deleteMaintenanceStaff = api.deleteMaintenanceStaff(idInt)
+                println(deleteMaintenanceStaff)
+            }
             "7" -> {
                 print("Machine id:")
-                val id = readLine()
+                val id = readlnOrNull()
 
-                val machine = api.getMachineById(id!!)
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                val idInt = id!!.toInt()
+
+                val machine = api.getMachineById(idInt)
                 println(machine)
             }
             "8" -> {
@@ -95,12 +170,26 @@ fun scipt() {
             }
             "9" -> {
                 print("Product id:")
-                val id = readLine()
+                val id = readlnOrNull()
 
                 print("New price:")
-                val price = readLine()
+                val price = readlnOrNull()
 
-                val adjustPrice = api.adjustPrice(id!!, price!!)
+                if (id != null && price != null) {
+                    if (verifyInt(id) || verifyInt(price)) {
+                        println("Invalid id or price")
+                        continue
+                    }
+                }
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                val idInt = id!!.toInt()
+                val priceInt = price!!.toInt()
+
+                val adjustPrice = api.adjustPrice(idInt, priceInt)
                 println(adjustPrice)
             }
             "10" -> {
@@ -110,14 +199,40 @@ fun scipt() {
                 print("Product price:")
                 val price = readLine()
 
-                val addProduct = api.addProduct(name!!, price!!)
+                if (name != null && price != null) {
+                    if (name.length > 3 || verifyInt(price)) {
+                        println("Invalid name or price")
+                        continue
+                    }
+                }
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                val priceInt = price!!.toInt()
+
+                val addProduct = api.addProduct(name!!, priceInt)
                 println(addProduct)
             }
             "11" -> {
                 print("Product id:")
                 val id = readLine()
 
-                val deleteProduct = api.deleteProduct(id!!)
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                val idInt = id!!.toInt()
+
+                val deleteProduct = api.deleteProduct(idInt)
                 println(deleteProduct)
             }
             "12" -> {
@@ -128,9 +243,30 @@ fun scipt() {
             }
         }
     }
+}
 
 
 
+private fun areYouSure () : Boolean {
+    println("Are you sure?")
+    print("Y/N:")
+    val confirm = readLine()
 
+    return if (confirm == "Y") {
+        true
+    } else {
+        false
+    }
+}
 
+private fun verifyInt (int : String) : Boolean {
+    if (int == "") {
+        return false
+    }
+
+    return try {
+        int.toInt() >= 0
+    } catch (e: Exception) {
+        false
+    }
 }
