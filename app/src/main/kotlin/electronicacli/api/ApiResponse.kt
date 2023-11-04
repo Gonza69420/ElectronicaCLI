@@ -18,7 +18,7 @@ class ApiResponse {
         }
     }
 
-    fun refillMachine(machineId : Int , newQuantity : String , productId : Int) : String {
+    fun refillMachine(machineId : Int , newQuantity : Int , productId : Int) : String {
         val json = "{\"newQuantity\":\"$newQuantity\",\"productId\":\"$productId\"}"
 
         try {
