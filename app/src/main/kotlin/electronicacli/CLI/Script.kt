@@ -63,8 +63,13 @@ fun scipt() {
                     continue
                 }
 
-                val addMachine = api.addMachine()
-                println(addMachine)
+                try {
+                    val addMachine = api.addMachine()
+                    println(addMachine)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
+
             }
             "2" -> {
                 print("Machine id:")
@@ -82,10 +87,12 @@ fun scipt() {
                 }
 
                 val idInt = id!!.toInt()
-
-                val deleteMachine = api.deleteMachine(idInt)
-                println(deleteMachine)
-
+                try {
+                    val deleteMachine = api.deleteMachine(idInt)
+                    println(deleteMachine)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "3" -> {
                 print("Machine id:")
@@ -104,13 +111,20 @@ fun scipt() {
 
                 val idInt = id!!.toInt()
 
-
-                val income = api.getIncomeInMachine(idInt)
-                println(income)
+                try {
+                    val income = api.getIncomeInMachine(idInt)
+                    println(income)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "4" -> {
-                val machines = api.getAllMachines()
-                println(machines)
+                try {
+                    val machines = api.getAllMachines()
+                    println(machines)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "5" -> {
                 print("Username:")
@@ -129,8 +143,12 @@ fun scipt() {
                     }
                 }
 
-                val addMaintenanceStaff = api.addMaintenanceStaff(username!!, password!!, name!!)
-                println(addMaintenanceStaff)
+                try {
+                    val addMaintenanceStaff = api.addMaintenanceStaff(username!!, password!!, name!!)
+                    println(addMaintenanceStaff)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "6" -> {
                 print("Maintenance staff id:")
@@ -149,8 +167,12 @@ fun scipt() {
 
                 val idInt = id!!.toInt()
 
-                val deleteMaintenanceStaff = api.deleteMaintenanceStaff(idInt)
-                println(deleteMaintenanceStaff)
+                try {
+                    val deleteMaintenanceStaff = api.deleteMaintenanceStaff(idInt)
+                    println(deleteMaintenanceStaff)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "7" -> {
                 print("Machine id:")
@@ -165,8 +187,12 @@ fun scipt() {
 
                 val idInt = id!!.toInt()
 
-                val machine = api.getMachineById(idInt)
-                println(machine)
+                try {
+                    val machine = api.getMachineById(idInt)
+                    println(machine)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "8" -> {
                 val totalIncome = api.getTotalIncome()
@@ -193,8 +219,12 @@ fun scipt() {
                 val idInt = id!!.toInt()
                 val priceInt = price!!.toInt()
 
-                val adjustPrice = api.adjustPrice(idInt, priceInt)
-                println(adjustPrice)
+                try {
+                    val adjustPrice = api.adjustPrice(idInt, priceInt)
+                    println(adjustPrice)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "10" -> {
                 print("Product name:")
@@ -216,8 +246,12 @@ fun scipt() {
 
                 val priceInt = price!!.toInt()
 
-                val addProduct = api.addProduct(name!!, priceInt)
-                println(addProduct)
+                try {
+                    val addProduct = api.addProduct(name!!, priceInt)
+                    println(addProduct)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "11" -> {
                 print("Product id:")
@@ -236,8 +270,12 @@ fun scipt() {
 
                 val idInt = id!!.toInt()
 
-                val deleteProduct = api.deleteProduct(idInt)
-                println(deleteProduct)
+                try {
+                    val deleteProduct = api.deleteProduct(idInt)
+                    println(deleteProduct)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "12" -> {
                 print("Product id:")
@@ -252,8 +290,12 @@ fun scipt() {
 
                 val idInt = id!!.toInt()
 
-                val product = api.getProduct(idInt)
-                println(product)
+                try {
+                    val product = api.getProduct(idInt)
+                    println(product)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "13" -> {
                 val products = api.getAllProducts()
@@ -272,12 +314,20 @@ fun scipt() {
 
                 val idInt = id!!.toInt()
 
-                val maintenanceStaff = api.getMaintenanceStaff(idInt)
-                println(maintenanceStaff)
+                try {
+                    val maintenanceStaff = api.getMaintenanceStaff(idInt)
+                    println(maintenanceStaff)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "15" -> {
-                val maintenanceStaff = api.getAllMaintenanceStaff()
-                println(maintenanceStaff)
+                try {
+                    val maintenanceStaff = api.getAllMaintenanceStaff()
+                    println(maintenanceStaff)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
             }
             "16" -> {
                 println("Bye!")
