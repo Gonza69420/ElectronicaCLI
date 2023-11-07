@@ -1,6 +1,7 @@
 package electronicacli.api
 import electronicacli.utils.post
 import electronicacli.utils.put
+import electronicacli.utils.get
 
 
 class ApiResponse {
@@ -40,6 +41,38 @@ class ApiResponse {
     fun machineIsReady(machineId: Int) : String {
         try {
             return put("/machineReady/${machineId}", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getMachineById(idInt: Int): Any {
+        try {
+            return get("/machine/${idInt}", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getAllMachines(): Any {
+        try {
+            return get("/machines", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getProductById(idInt: Int): Any {
+        try {
+            return get("/product/${idInt}", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getAllProducts(): Any {
+        try {
+            return get("/products", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
