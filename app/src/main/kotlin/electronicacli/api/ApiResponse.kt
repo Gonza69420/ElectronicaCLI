@@ -120,4 +120,36 @@ class ApiResponse {
             throw Exception(e.message)
         }
     }
+
+    fun getProduct(id : Int) : String {
+        try{
+            return get("/getProducts/$id", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getAllProducts() : String {
+        try{
+            return get("/getAllProducts", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getMaintenanceStaff(id : Int) : String {
+        try{
+            return get("/getMaintenanceStaff/$id", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun getAllMaintenanceStaff() : String {
+        try{
+            return get("/allMaintenanceStaff", token)
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
 }

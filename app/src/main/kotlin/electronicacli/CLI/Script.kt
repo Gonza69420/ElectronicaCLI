@@ -48,7 +48,11 @@ fun scipt() {
         println("9. Adjust price of product")
         println("10. Add product")
         println("11. Delete product")
-        println("12. Exit")
+        println("12. Get a product by id")
+        println("13. Get all products")
+        println("14. Get maintenance staff by id")
+        println("15. Get all maintenance staff")
+        println("16. Exit")
 
         print("Option:")
         val option = readlnOrNull()
@@ -236,6 +240,47 @@ fun scipt() {
                 println(deleteProduct)
             }
             "12" -> {
+                print("Product id:")
+                val id = readLine()
+
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                val idInt = id!!.toInt()
+
+                val product = api.getProduct(idInt)
+                println(product)
+            }
+            "13" -> {
+                val products = api.getAllProducts()
+                println(products)
+            }
+            "14" -> {
+                print("Maintenance staff id:")
+                val id = readLine()
+
+                if (id != null) {
+                    if (verifyInt(id)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+                val idInt = id!!.toInt()
+
+                val maintenanceStaff = api.getMaintenanceStaff(idInt)
+                println(maintenanceStaff)
+            }
+            "15" -> {
+                val maintenanceStaff = api.getAllMaintenanceStaff()
+                println(maintenanceStaff)
+            }
+            "16" -> {
+                println("Bye!")
                 break
             }
             else -> {
