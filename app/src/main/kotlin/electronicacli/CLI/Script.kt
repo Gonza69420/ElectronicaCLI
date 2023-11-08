@@ -18,7 +18,7 @@ fun scipt() {
         val password = readLine()
 
         if (username != null && password != null) {
-            if (username.length > 3 || password.length > 3) {
+            if (username.length < 3 || password.length < 3) {
                 println("Invalid username or password")
                 continue
             }

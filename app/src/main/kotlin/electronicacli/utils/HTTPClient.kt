@@ -15,7 +15,7 @@ var client = OkHttpClient()
 fun post (url : String , json : String) : String {
     val body : RequestBody = json.toRequestBody(JSON)
     val request : Request = Request.Builder()
-        .url(getServerUrl() + url)
+        .url("http://ec2-3-87-159-65.compute-1.amazonaws.com:3000" + url)
         .post(body)
         .build()
 
