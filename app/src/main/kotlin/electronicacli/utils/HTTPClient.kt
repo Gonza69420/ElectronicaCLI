@@ -15,16 +15,11 @@ var client = OkHttpClient()
 fun post (url : String , json : String) : String {
     val body : RequestBody = json.toRequestBody(JSON)
     val request : Request = Request.Builder()
-        .url("http://ec2-3-87-159-65.compute-1.amazonaws.com:3000" + url)
+        .url(getServerUrl() + url)
         .post(body)
         .build()
 
-    return try {
-        val response: Response = client.newCall(request).execute()
-        response.body!!.string()
-    } catch (e: IOException) {
-        throw Exception(e.message)
-    }
+    return handleResponse(request)
 }
 
 fun post (url : String , json : String, token : String) : String {
@@ -35,12 +30,7 @@ fun post (url : String , json : String, token : String) : String {
             .addHeader("authorization", token)
             .build()
 
-    return try {
-        val response: Response = client.newCall(request).execute()
-        response.body!!.string()
-    } catch (e: IOException) {
-        throw Exception(e.message)
-    }
+    return handleResponse(request)
 }
 
 fun get (url : String ) : String {
@@ -49,12 +39,7 @@ fun get (url : String ) : String {
         .get()
         .build()
 
-    return try {
-        val response: Response = client.newCall(request).execute()
-        response.body!!.string()
-    } catch (e: IOException) {
-        throw Exception(e.message)
-    }
+    return handleResponse(request)
 }
 
 fun get (url : String , token : String) : String {
@@ -64,12 +49,7 @@ fun get (url : String , token : String) : String {
             .addHeader("authorization", token)
             .build()
 
-    return try {
-        val response: Response = client.newCall(request).execute()
-        response.body!!.string()
-    } catch (e: IOException) {
-        throw Exception(e.message)
-    }
+    return handleResponse(request)
 }
 
 fun delete (url : String , token : String) : String {
@@ -79,12 +59,7 @@ fun delete (url : String , token : String) : String {
             .addHeader("authorization", token)
             .build()
 
-    return try {
-        val response: Response = client.newCall(request).execute()
-        response.body!!.string()
-    } catch (e: IOException) {
-        throw Exception(e.message)
-    }
+    return handleResponse(request)
 }
 
 fun put (url: String ,json: String, token : String ) : String {
@@ -96,9 +71,17 @@ fun put (url: String ,json: String, token : String ) : String {
             .addHeader("authorization", token)
             .build()
 
-    return try {
+    return handleResponse(request)
+}
+
+private fun handleResponse(request: Request) : String {
+    return try{
         val response: Response = client.newCall(request).execute()
-        response.body!!.string()
+        if (response.isSuccessful) {
+            response.body!!.string()
+        } else {
+            throw Exception(response.code.toString() + " " + response.message)
+        }
     } catch (e: IOException) {
         throw Exception(e.message)
     }

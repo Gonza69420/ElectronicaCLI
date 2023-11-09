@@ -28,5 +28,4 @@ replay_pid*
 
 # Ignore Gradle build output directory
 build
-
-/app/config/application.properties
+/app/src/main/kotlin/electronicacli/utils/config.kt

@@ -1,6 +1,6 @@
 package electronicacli.CLI
 import electronicacli.api.ApiResponse
-
+import electronicacli.utils.post
 
 
 fun scipt() {
@@ -11,10 +11,10 @@ fun scipt() {
     while (true) {
         println("Log In")
 
-        print("Username:")
+        print("Username: ")
         val username = readLine()
 
-        print("Password:")
+        print("Password: ")
         val password = readLine()
 
         if (username != null && password != null) {
@@ -23,19 +23,24 @@ fun scipt() {
                 continue
             }
         }
+        try {
+            val login = api.login(username!!, password!!)
 
-        val login = api.login(username!!, password!!)
-
-        if (login == "Login successful") {
-            break
-        } else {
-            println(login)
+            if (login == "Login successful") {
+                break
+            } else {
+                println(login)
+            }
+        } catch (e: Exception) {
+            println(e.message)
         }
     }
 
     //clear
 
     while (true) {
+        println("")
+        println("")
         println("What do you want to do?")
         println("1. Add machine")
         println("2. Delete machine")
@@ -54,7 +59,8 @@ fun scipt() {
         println("15. Get all maintenance staff")
         println("16. Exit")
 
-        print("Option:")
+        print("Option: ")
+
         val option = readlnOrNull()
 
         when (option) {

@@ -12,7 +12,7 @@ class ApiResponse {
         val json = "{\"username\":\"$username\",\"password\":\"$password\"}"
 
         try{
-            val response = post("/login", json)
+            val response = post("/user/login", json)
             token = response
             return "Login successful"
         } catch (e: Exception) {
@@ -22,7 +22,7 @@ class ApiResponse {
 
     fun addMachine () : String {
         try{
-            val response = post("/addMachine", "{}", token)
+            val response = post("/admin/addMachine", "{}", token)
             return "Machine added"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -31,7 +31,7 @@ class ApiResponse {
 
     fun deleteMachine(id : Int) : String {
         try{
-            val response = delete("/deleteMachine/$id", token)
+            val response = delete("/admin/deleteMachine/$id", token)
             return "Machine deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -40,7 +40,7 @@ class ApiResponse {
 
     fun getIncomeInMachine (id : Int) : String {
         try {
-            return get("/getIncome/${id}", token)
+            return get("/admin/getIncome/${id}", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -48,7 +48,7 @@ class ApiResponse {
 
     fun getAllMachines() : String {
         try{
-            return get("/getAllMachines", token)
+            return get("/admin/getAllMachines", token)
         } catch (e : Exception) {
             throw Exception(e.message)
         }
@@ -58,7 +58,7 @@ class ApiResponse {
         val json = "{\"username\":\"$username\",\"password\":\"$password\",\"name\":\"$name\"}"
 
         try{
-            val response = post("/addMaintenanceStaff", json, token)
+            val response = post("/admin/addMaintenanceStaff", json, token)
             return "Maintenance staff added"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -67,7 +67,7 @@ class ApiResponse {
 
     fun deleteMaintenanceStaff (id : Int) : String {
         try{
-            val response = delete("/deleteMaintenanceStaff/$id", token)
+            val response = delete("/admin/deleteMaintenanceStaff/$id", token)
             return "Maintenance staff deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -76,7 +76,7 @@ class ApiResponse {
 
     fun getMachineById (id : Int) : String {
         try{
-            return get("/getMachine/$id", token)
+            return get("/admin/getMachine/$id", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -84,7 +84,7 @@ class ApiResponse {
 
     fun getTotalIncome () : String {
         try{
-            return get("/getTotalIncome", token)
+            return get("/admin/getTotalIncome", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -94,7 +94,7 @@ class ApiResponse {
         val json = "{\"newPrice\":\"$newPrice\"}"
 
         try{
-            val response = put("/adjustPrice/${id}", json, token)
+            val response = put("/admin/adjustPrice/${id}", json, token)
             return "Price adjusted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -105,7 +105,7 @@ class ApiResponse {
         val json = "{\"name\":\"$name\",\"price\":\"$price\"}"
 
         try{
-            val response = post("/addProduct", json, token)
+            val response = post("/admin/addProduct", json, token)
             return "Product added"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -114,7 +114,7 @@ class ApiResponse {
 
     fun deleteProduct(id : Int) : String {
         try{
-            val response = delete("/deleteProduct/$id", token)
+            val response = delete("/admin/deleteProduct/$id", token)
             return "Product deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -123,7 +123,7 @@ class ApiResponse {
 
     fun getProduct(id : Int) : String {
         try{
-            return get("/getProducts/$id", token)
+            return get("/admin/getProducts/$id", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -131,7 +131,7 @@ class ApiResponse {
 
     fun getAllProducts() : String {
         try{
-            return get("/getAllProducts", token)
+            return get("/admin/getAllProducts", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -139,7 +139,7 @@ class ApiResponse {
 
     fun getMaintenanceStaff(id : Int) : String {
         try{
-            return get("/getMaintenanceStaff/$id", token)
+            return get("/admin/getMaintenanceStaff/$id", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -147,7 +147,7 @@ class ApiResponse {
 
     fun getAllMaintenanceStaff() : String {
         try{
-            return get("/allMaintenanceStaff", token)
+            return get("/admin/allMaintenanceStaff", token)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
