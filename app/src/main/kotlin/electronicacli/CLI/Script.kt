@@ -144,7 +144,7 @@ fun scipt() {
                 val name = readlnOrNull()
 
                 if (username != null && password != null && name != null) {
-                    if (username.length > 3 || password.length > 3 || name.length > 3) {
+                    if (username.length < 3 || password.length < 3 || name.length < 3) {
                         println("Invalid username or password")
                         continue
                     }
@@ -241,7 +241,7 @@ fun scipt() {
                 val price = readLine()
 
                 if (name != null && price != null) {
-                    if (name.length > 3 || verifyInt(price)) {
+                    if (name.length < 3 || verifyInt(price)) {
                         println("Invalid name or price")
                         continue
                     }
@@ -362,14 +362,15 @@ private fun areYouSure () : Boolean {
     }
 }
 
-private fun verifyInt (int : String) : Boolean {
-    if (int == "") {
+private fun verifyInt (inputString : String) : Boolean {
+    if (inputString.isBlank()) {
         return false
     }
 
     return try {
-        int.toInt() >= 0
-    } catch (e: Exception) {
-        false
+        val intValue = inputString.toInt()
+        intValue <= 0
+    } catch (e: NumberFormatException) {
+        true
     }
 }

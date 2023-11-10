@@ -95,7 +95,9 @@ class ApiResponse {
                     val product = productsArray.getJSONObject(j)
                     val productName = product.getJSONObject("product").getString("name")
                     val productQuantity = product.getInt("quantity")
+                    val productId = product.getInt("customId")
 
+                    println("  Product ID: $productId")
                     println("  Product Name: $productName")
                     println("  Quantity: $productQuantity")
                     println("  ------------")
@@ -181,7 +183,9 @@ class ApiResponse {
                 val product = productsArray.getJSONObject(i)
                 val productName = product.getJSONObject("product").getString("name")
                 val productQuantity = product.getInt("quantity")
+                val productId = product.getInt("customId")
 
+                println("  Product ID: $productId")
                 println("  Product Name: $productName")
                 println("  Quantity: $productQuantity")
                 println("  ------------")
@@ -194,74 +198,249 @@ class ApiResponse {
     }
 
 
-    fun getTotalIncome () : String {
-        try{
-            return get("/admin/getTotalIncome", token)
+    fun getTotalIncome(): String {
+        try {
+            val response = get("/admin/getTotalIncome", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error getting total income"
+            }
+
+            // Extracting relevant information from the JSON response
+            val totalIncome = jsonResponse.getJSONObject("data").getDouble("totalIncome")
+
+            // Print the relevant information
+            println("Total Income: $totalIncome")
+
+            return "Total income retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun adjustPrice(id : Int , newPrice : Int ) : String {
+
+    fun adjustPrice(id: Int, newPrice: Int): String {
         val json = "{\"newPrice\":\"$newPrice\"}"
 
-        try{
-            val response = put("/admin/adjustPrice/${id}", json, token)
-            return "Price adjusted"
+        try {
+            val response = put("/admin/adjustPrice/$id", json, token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error adjusting product price"
+            }
+
+            // Print the relevant information
+            println("Product price adjusted successfully")
+
+            return "Product price adjusted"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun addProduct(name : String , price : Int) : String {
+
+    fun addProduct(name: String, price: Int): String {
         val json = "{\"name\":\"$name\",\"price\":\"$price\"}"
 
-        try{
+        try {
             val response = post("/admin/addProduct", json, token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error adding product"
+            }
+
+            // Extracting relevant information from the JSON response
+            val addedProduct = jsonResponse.getJSONObject("data")
+            val productName = addedProduct.getString("name")
+            val productPrice = addedProduct.getInt("price")
+            val customId = addedProduct.getInt("customId")
+
+
+            // Print the relevant information
+            println("Product added successfully:")
+            println("Product ID: $customId")
+            println("Product Name: $productName")
+            println("Product Price: $productPrice")
+
             return "Product added"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun deleteProduct(id : Int) : String {
-        try{
+
+    fun deleteProduct(id: Int): String {
+        try {
             val response = delete("/admin/deleteProduct/$id", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error deleting product"
+            }
+
+            // Print the relevant information
+            println("Product deleted successfully")
+
             return "Product deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun getProduct(id : Int) : String {
-        try{
-            return get("/admin/getProducts/$id", token)
+
+    fun getProduct(id: Int): String {
+        try {
+            val response = get("/admin/getProducts/$id", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error getting product"
+            }
+
+            // Extracting relevant information from the JSON response
+            val product = jsonResponse.getJSONObject("data").getJSONObject("product")
+            val productName = product.getString("name")
+            val productPrice = product.getInt("price")
+            val customId = product.getInt("customId")
+
+            // Print the relevant information
+            println("Product details:")
+            println("Product ID: $customId")
+            println("Product Name: $productName")
+            println("Product Price: $productPrice")
+
+            return "Product retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun getAllProducts() : String {
-        try{
-            return get("/admin/getAllProducts", token)
+
+
+    fun getAllProducts(): String {
+        try {
+            val response = get("/admin/getAllProducts", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error getting all products"
+            }
+
+            // Extracting relevant information from the JSON response
+            val productsArray = jsonResponse.getJSONObject("data").getJSONArray("products")
+
+            // Print the relevant information
+            println("All Products:")
+            for (i in 0 until productsArray.length()) {
+                val product = productsArray.getJSONObject(i)
+                val productId = product.getInt("customId")
+                val productName = product.getString("name")
+                val productPrice = product.getInt("price")
+
+                println("Product ID: $productId")
+                println("Product Name: $productName")
+                println("Product Price: $productPrice")
+                println("------------")
+            }
+
+            return "All products retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun getMaintenanceStaff(id : Int) : String {
-        try{
-            return get("/admin/getMaintenanceStaff/$id", token)
+    fun getMaintenanceStaff(id: Int): String {
+        try {
+            val response = get("/admin/getMaintenanceStaff/$id", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error getting maintenance staff"
+            }
+
+            // Extracting relevant information from the JSON response
+            val user = jsonResponse.getJSONObject("data").getJSONArray("user").getJSONObject(0)
+            val userId = user.getInt("customId")
+            val userName = user.getString("name")
+            val userUsername = user.getString("username")
+
+            // Print the relevant information
+            println("Maintenance Staff details:")
+            println("User ID: $userId")
+            println("User Name: $userName")
+            println("Username: $userUsername")
+
+            return "Maintenance staff retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun getAllMaintenanceStaff() : String {
-        try{
-            return get("/admin/allMaintenanceStaff", token)
+    fun getAllMaintenanceStaff(): String {
+        try {
+            val response = get("/admin/allMaintenanceStaff", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error getting all maintenance staff"
+            }
+
+            // Extracting relevant information from the JSON response
+            val usersArray = jsonResponse.getJSONObject("data").getJSONArray("users")
+
+            // Print the relevant information
+            println("All Maintenance Staff:")
+            for (i in 0 until usersArray.length()) {
+                val user = usersArray.getJSONObject(i)
+                val userId = user.getInt("customId")
+                val userName = user.getString("name")
+                val userUsername = user.getString("username")
+
+                println("User ID: $userId")
+                println("User Name: $userName")
+                println("Username: $userUsername")
+                println("------------")
+            }
+
+            return "All maintenance staff retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
+
 }
