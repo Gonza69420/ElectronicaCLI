@@ -36,6 +36,7 @@ dependencies {
     //TypeSafe
     implementation("com.typesafe:config:1.4.1")
 
+    implementation("org.json:json:20230227")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

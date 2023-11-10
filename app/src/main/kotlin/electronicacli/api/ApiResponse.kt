@@ -1,7 +1,7 @@
 package electronicacli.api
 import electronicacli.utils.*
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+
 
 
 class ApiResponse {
@@ -22,7 +22,21 @@ class ApiResponse {
     fun addMachine () : String {
         try{
             val response = post("/admin/addMachine", "{}", token)
-            println(response)
+            val jsonResponse = JSONObject(response)
+
+            // Extracting relevant information from the JSON response
+            val machineId = jsonResponse.getJSONObject("machine").getInt("customId")
+            val works = jsonResponse.getJSONObject("machine").getBoolean("works")
+            val beingRepaired = jsonResponse.getJSONObject("machine").getBoolean("beingRepaired")
+            val income = jsonResponse.getJSONObject("machine").getDouble("income")
+
+            // Print the relevant information
+            println("Machine added successfully:")
+            println("Machine ID: $machineId")
+            println("Works: $works")
+            println("Being Repaired: $beingRepaired")
+            println("Income: $income")
+
             return "Machine added"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -31,7 +45,7 @@ class ApiResponse {
 
     fun deleteMachine(id : Int) : String {
         try{
-            val response = delete("/admin/deleteMachine/$id", token)
+            delete("/admin/deleteMachine/$id", token)
             return "Machine deleted"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -40,30 +54,89 @@ class ApiResponse {
 
     fun getIncomeInMachine (id : Int) : String {
         try {
-            return get("/admin/getIncome/${id}", token)
+            val response = get("/admin/getIncome/${id}", token)
+            val jsonResponse = JSONObject(response)
+
+            val income = jsonResponse.getJSONObject("data")
+            println("Income: $income")
+
+            return "Income retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun getAllMachines() : String {
-        try{
-            return get("/admin/getAllMachines", token)
-        } catch (e : Exception) {
+    fun getAllMachines(): String {
+        try {
+            val response = get("/admin/getAllMachines", token)
+            val jsonResponse = JSONObject(response)
+
+            // Extracting relevant information from the JSON response
+            val machinesArray = jsonResponse.getJSONObject("data").getJSONArray("machines")
+
+            // Print the relevant information for each machine
+            println("All Machines:")
+            for (i in 0 until machinesArray.length()) {
+                val machine = machinesArray.getJSONObject(i)
+                val customId = machine.getInt("customId")
+                val works = machine.getBoolean("works")
+                val beingRepaired = machine.getBoolean("beingRepaired")
+                val income = machine.getDouble("income")
+
+                println("Machine ID: $customId")
+                println("Works: $works")
+                println("Being Repaired: $beingRepaired")
+                println("Income: $income")
+
+                // Print products for each machine
+                val productsArray = machine.getJSONArray("products")
+                println("Products:")
+                for (j in 0 until productsArray.length()) {
+                    val product = productsArray.getJSONObject(j)
+                    val productName = product.getJSONObject("product").getString("name")
+                    val productQuantity = product.getInt("quantity")
+
+                    println("  Product Name: $productName")
+                    println("  Quantity: $productQuantity")
+                    println("  ------------")
+                }
+
+                println("------------")
+            }
+
+            return "All machines retrieved"
+        } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    fun addMaintenanceStaff( username : String , password : String , name : String) : String {
+
+
+    fun addMaintenanceStaff(username: String, password: String, name: String): String {
         val json = "{\"username\":\"$username\",\"password\":\"$password\",\"name\":\"$name\"}"
 
-        try{
+        try {
             val response = post("/admin/addMaintenanceStaff", json, token)
+            val jsonResponse = JSONObject(response)
+
+            // Extracting relevant information from the JSON response
+            val user = jsonResponse.getJSONObject("user")
+            val customId = user.getInt("customId")
+            val createdUsername = user.getString("username")
+            val createdName = user.getString("name")
+
+            // Print the relevant information
+            println("Maintenance staff added successfully:")
+            println("User ID: $customId")
+            println("Username: $createdUsername")
+            println("Name: $createdName")
+
             return "Maintenance staff added"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
+
 
     fun deleteMaintenanceStaff (id : Int) : String {
         try{
@@ -74,13 +147,52 @@ class ApiResponse {
         }
     }
 
-    fun getMachineById (id : Int) : String {
-        try{
-            return get("/admin/getMachine/$id", token)
+    fun getMachineById(id: Int): String {
+        try {
+            val response = get("/admin/getMachine/$id", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the machine is found
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Machine not found"
+            }
+
+            // Extracting relevant information from the JSON response
+            val machine = jsonResponse.getJSONObject("machine")
+            val customId = machine.getInt("customId")
+            val works = machine.getBoolean("works")
+            val beingRepaired = machine.getBoolean("beingRepaired")
+            val income = machine.getDouble("income")
+
+            // Print the relevant information
+            println("Machine details:")
+            println("Machine ID: $customId")
+            println("Works: $works")
+            println("Being Repaired: $beingRepaired")
+            println("Income: $income")
+
+            // Print products for the machine
+            val productsArray = machine.getJSONArray("products")
+            println("Products:")
+            for (i in 0 until productsArray.length()) {
+                val product = productsArray.getJSONObject(i)
+                val productName = product.getJSONObject("product").getString("name")
+                val productQuantity = product.getInt("quantity")
+
+                println("  Product Name: $productName")
+                println("  Quantity: $productQuantity")
+                println("  ------------")
+            }
+
+            return "Machine details retrieved"
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
+
 
     fun getTotalIncome () : String {
         try{
