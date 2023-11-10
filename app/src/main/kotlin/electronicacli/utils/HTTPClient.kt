@@ -74,15 +74,26 @@ fun put (url: String ,json: String, token : String ) : String {
     return handleResponse(request)
 }
 
-private fun handleResponse(request: Request) : String {
-    return try{
+private fun handleResponse(request: Request): String {
+    return try {
         val response: Response = client.newCall(request).execute()
-        if (response.isSuccessful) {
-            response.body!!.string()
-        } else {
-            throw Exception(response.code.toString() + " " + response.message)
+
+        if (!response.isSuccessful) {
+            val responseBody = response.body
+            val errorMessage = responseBody?.string()
+
+            responseBody?.close() // Close the response body
+
+            throw Exception("Error response: ${response.code}, $errorMessage")
         }
+
+        val responseBody = response.body
+        val responseBodyString = responseBody?.string()
+
+        responseBody?.close() // Close the response body
+
+        responseBodyString ?: throw Exception("Empty response body")
     } catch (e: IOException) {
-        throw Exception(e.message)
+        throw Exception("Error reading response: ${e.message}")
     }
 }

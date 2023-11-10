@@ -1,8 +1,7 @@
 package electronicacli.api
-import electronicacli.utils.post
-import electronicacli.utils.get
-import electronicacli.utils.delete
-import electronicacli.utils.put
+import electronicacli.utils.*
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 
 class ApiResponse {
@@ -13,7 +12,7 @@ class ApiResponse {
 
         try{
             val response = post("/user/login", json)
-            token = response
+            token = response.split(":")[1].split("\"")[1]
             return "Login successful"
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -23,6 +22,7 @@ class ApiResponse {
     fun addMachine () : String {
         try{
             val response = post("/admin/addMachine", "{}", token)
+            println(response)
             return "Machine added"
         } catch (e: Exception) {
             throw Exception(e.message)

@@ -9,6 +9,7 @@ fun scipt() {
     val api = ApiResponse()
 
     while (true) {
+        //post("/createAdmin", "")
         println("Log In")
 
         print("Username: ")
@@ -78,7 +79,7 @@ fun scipt() {
 
             }
             "2" -> {
-                print("Machine id:")
+                print("Machine id: ")
                 val id = readlnOrNull()
 
                 if (id != null) {
@@ -350,12 +351,13 @@ fun scipt() {
 
 private fun areYouSure () : Boolean {
     println("Are you sure?")
-    print("Y/N:")
+    print("Y/N: ")
     val confirm = readLine()
 
-    return if (confirm == "Y") {
+    return if (confirm == "Y" || confirm == "y") {
         true
     } else {
+        println("Canceled")
         false
     }
 }
