@@ -30,3 +30,4 @@ replay_pid*
 build
 
 /app/config/application.properties
+/app/src/main/kotlin/electronicacli/utils/config.kt
