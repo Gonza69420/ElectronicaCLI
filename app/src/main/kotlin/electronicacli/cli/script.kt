@@ -2,7 +2,7 @@ package electronicacli.cli
 import electronicacli.api.ApiResponse
 
 fun scipt() {
-    println("Hello Admin!")
+    println("Hello Staff!")
 
     val api = ApiResponse()
 

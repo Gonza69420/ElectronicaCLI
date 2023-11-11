@@ -166,12 +166,12 @@ class ApiResponse {
         // Print products for each machine
         val productsArray = machine.getJSONArray("products")
         println("Products:")
+        println("------------")
         for (j in 0 until productsArray.length()) {
-            val product = productsArray.getJSONObject(j)
-            printProduct(product)
+            val productJSON = productsArray.getJSONObject(j).getJSONObject("product")
+            printProduct(productJSON)
         }
 
-        println("------------")
     }
 
 }
