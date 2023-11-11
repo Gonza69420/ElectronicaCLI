@@ -64,6 +64,8 @@ fun scipt() {
 
         val option = readlnOrNull()
 
+        println("")
+
         when (option) {
             "1" -> {
                 if (!areYouSure()) {
@@ -102,7 +104,7 @@ fun scipt() {
                 }
             }
             "3" -> {
-                print("Machine id:")
+                print("Machine id: ")
                 val id = readlnOrNull()
 
                 if (id != null) {
@@ -134,13 +136,13 @@ fun scipt() {
                 }
             }
             "5" -> {
-                print("Username:")
+                print("Username: ")
                 val username = readlnOrNull()
 
-                print("Password:")
+                print("Password: ")
                 val password = readlnOrNull()
 
-                print("Name:")
+                print("Name: ")
                 val name = readlnOrNull()
 
                 if (username != null && password != null && name != null) {
@@ -158,7 +160,7 @@ fun scipt() {
                 }
             }
             "6" -> {
-                print("Maintenance staff id:")
+                print("Maintenance staff id: ")
                 val id = readlnOrNull()
 
                 if (id != null) {
@@ -182,7 +184,7 @@ fun scipt() {
                 }
             }
             "7" -> {
-                print("Machine id:")
+                print("Machine id: ")
                 val id = readlnOrNull()
 
                 if (id != null) {
@@ -206,10 +208,10 @@ fun scipt() {
                 println(totalIncome)
             }
             "9" -> {
-                print("Product id:")
+                print("Product id: ")
                 val id = readlnOrNull()
 
-                print("New price:")
+                print("New price: ")
                 val price = readlnOrNull()
 
                 if (id != null && price != null) {
@@ -234,10 +236,10 @@ fun scipt() {
                 }
             }
             "10" -> {
-                print("Product name:")
+                print("Product name: ")
                 val name = readLine()
 
-                print("Product price:")
+                print("Product price: ")
                 val price = readLine()
 
                 if (name != null && price != null) {
@@ -261,7 +263,7 @@ fun scipt() {
                 }
             }
             "11" -> {
-                print("Product id:")
+                print("Product id: ")
                 val id = readLine()
 
                 if (id != null) {
@@ -285,7 +287,7 @@ fun scipt() {
                 }
             }
             "12" -> {
-                print("Product id:")
+                print("Product id: ")
                 val id = readLine()
 
                 if (id != null) {
@@ -309,7 +311,7 @@ fun scipt() {
                 println(products)
             }
             "14" -> {
-                print("Maintenance staff id:")
+                print("Maintenance staff id: ")
                 val id = readLine()
 
                 if (id != null) {

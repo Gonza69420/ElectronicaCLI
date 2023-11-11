@@ -52,12 +52,23 @@ class ApiResponse {
         }
     }
 
-    fun getIncomeInMachine (id : Int) : String {
+    fun getIncomeInMachine(id: Int): String {
         try {
-            val response = get("/admin/getIncome/${id}", token)
+            val response = get("/admin/getIncome/$id", token)
             val jsonResponse = JSONObject(response)
 
-            val income = jsonResponse.getJSONObject("data")
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return "Error getting income"
+            }
+
+            // Extracting relevant information from the JSON response
+            val income = jsonResponse.getDouble("data")
+
+            // Print the relevant information
             println("Income: $income")
 
             return "Income retrieved"
@@ -65,6 +76,7 @@ class ApiResponse {
             throw Exception(e.message)
         }
     }
+
 
     fun getAllMachines(): String {
         try {
@@ -163,7 +175,7 @@ class ApiResponse {
             }
 
             // Extracting relevant information from the JSON response
-            val machine = jsonResponse.getJSONObject("machine")
+            val machine = jsonResponse.getJSONObject("data").getJSONObject("machine")
             val customId = machine.getInt("customId")
             val works = machine.getBoolean("works")
             val beingRepaired = machine.getBoolean("beingRepaired")
