@@ -46,7 +46,8 @@ fun scipt() {
         println("5. Get all machines")
         println("6. Get all products")
         println("7. Get product by id")
-        println("8. Exit")
+        println("8. Eliminate a product from a machine")
+        println("9. Exit")
 
         print("Option: ")
         val option = readLine()
@@ -79,8 +80,6 @@ fun scipt() {
                     val newQuantityInt = newQuantity!!.toInt()
                     val refillMachine = api.refillMachine(idInt, newQuantityInt, prodocutIdInt)
 
-                    println("Success!")
-
                     println(refillMachine)
 
                 } catch (e: Exception) {
@@ -108,7 +107,6 @@ fun scipt() {
                     val idInt = id.toInt()
                     val workingInMachine = api.workingInMachine(idInt)
 
-                    println("Success!")
 
                     println(workingInMachine)
 
@@ -137,8 +135,6 @@ fun scipt() {
                 try{
                     val idInt = id.toInt()
                     val machineIsReady = api.machineIsReady(idInt)
-
-                    println("Success!")
 
                     println(machineIsReady)
 
@@ -205,6 +201,40 @@ fun scipt() {
                 }
             }
             "8" -> {
+                print("Machine id: ")
+                val id = readLine()
+
+                print("Product id: ")
+                val productId = readLine()
+
+                if (id != null && productId != null) {
+                    if (verifyInt(id) || verifyInt(productId)) {
+                        println("Invalid id")
+                        continue
+                    }
+                }
+
+
+
+                if (!areYouSure()) {
+                    continue
+                }
+
+                try{
+                    val idInt = id!!.toInt()
+                    val prodocutIdInt = productId!!.toInt()
+                    val eliminateProduct = api.eliminateProductMachine(idInt, prodocutIdInt)
+
+
+                    println(eliminateProduct)
+
+                } catch (e: Exception) {
+                    println("Id and product id must be numbers")
+
+                    continue
+                }
+            }
+            "9" -> {
                 println("Bye!")
                 break
             }

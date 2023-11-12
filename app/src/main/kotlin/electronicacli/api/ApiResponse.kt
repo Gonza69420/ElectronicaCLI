@@ -24,7 +24,18 @@ class ApiResponse {
         val json = "{\"newQuantity\":\"$newQuantity\",\"productId\":\"$productId\"}"
 
         try {
-            return put("/maintenance/refillMachine/${machineId}", json, token)
+            val response =  put("/maintenance/refillMachine/${machineId}", json, token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the machine is found
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return ""
+            }
+            return jsonResponse.getString("message")
+
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -33,7 +44,17 @@ class ApiResponse {
 
     fun workingInMachine(machineId: Int) : String {
         try {
-            return put("/maintenance/workingInMachine/${machineId}", token)
+            val response = put("/maintenance/workingInMachine/${machineId}", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the machine is found
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return ""
+            }
+            return jsonResponse.getString("message")
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -41,7 +62,17 @@ class ApiResponse {
 
     fun machineIsReady(machineId: Int) : String {
         try {
-            return put("/maintenance/machineReady/${machineId}", token)
+            val response = put("/maintenance/machineReady/${machineId}", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the machine is found
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return ""
+            }
+            return jsonResponse.getString("message")
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -57,7 +88,7 @@ class ApiResponse {
                 // Print error message
                 val errorMessage = jsonResponse.getString("error")
                 println("Error: $errorMessage")
-                return "Machine not found"
+                return ""
             }
 
             // Extracting relevant information from the JSON response
@@ -100,7 +131,7 @@ class ApiResponse {
                 // Print error message
                 val errorMessage = jsonResponse.getString("error")
                 println("Error: $errorMessage")
-                return "Error getting product"
+                return ""
             }
 
             // Extracting relevant information from the JSON response
@@ -124,7 +155,7 @@ class ApiResponse {
                 // Print error message
                 val errorMessage = jsonResponse.getString("error")
                 println("Error: $errorMessage")
-                return "Error getting all products"
+                return ""
             }
 
             // Extracting relevant information from the JSON response
@@ -137,6 +168,25 @@ class ApiResponse {
             }
 
             return "All products retrieved"
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    fun eliminateProductMachine(machineId: Int, productId: Int): String {
+        try {
+            val response = put("/maintenance/eliminateProductFromMachine/${machineId}/${productId}", token)
+            val jsonResponse = JSONObject(response)
+
+            // Check if the request was successful
+            if (jsonResponse.has("error")) {
+                // Print error message
+                val errorMessage = jsonResponse.getString("error")
+                println("Error: $errorMessage")
+                return ""
+            }
+
+            return jsonResponse.getString("message")
         } catch (e: Exception) {
             throw Exception(e.message)
         }
