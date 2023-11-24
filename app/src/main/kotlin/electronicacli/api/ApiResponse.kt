@@ -8,7 +8,8 @@ class ApiResponse {
     private var token : String = "";
 
     fun login(username : String , password : String) : String {
-        val json = "{\"username\":\"$username\",\"password\":\"$password\"}"
+        val role = "Admin"
+        val json = "{\"username\":\"$username\",\"password\":\"$password\",\"role\":\"$role\"}"
 
         try{
             val response = post("/user/login", json)
